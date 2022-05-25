@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Send Mail Using WebApi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" href="~/Assets/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="~/Assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="inner">
+            <form action="">
+                <h3>Contact Us</h3>
+                <p>Send Mail Using Ajax Call In Asp Dot Net MVC Using WebApi</p>
+                <label class="form-group">
+                    <input type="text" class="form-control" id="txtName" required>
+                    <span>Your Name</span>
+                    <span class="border"></span>
+                </label>
+                <label class="form-group">
+                    <input type="text" class="form-control" id="txtEmail" required>
+                    <span for="">Your Mail</span>
+                    <span class="border"></span>
+                </label>
+                <label class="form-group">
+                    <input type="text" class="form-control" id="txtSubject" required>
+                    <span for="">Your Subject</span>
+                    <span class="border"></span>
+                </label>
+                <label class="form-group">
+                    <textarea name="" class="form-control" id="txtBody" required></textarea>
+                    <span for="">Your Message</span>
+                    <span class="border"></span>
+                </label>
+                <button>
+                    Submit
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("button").click(function () {
+                var email = '{Email: "' + $("#txtEmail").val() + '", Subject: "' + $("#txtSubject").val() + '", Body: "' + $("#txtBody").val() + '", Name: "' + $("#txtName").val() + '" }';
+                $.ajax({
+                    type: "POST",
+                    url: "/api/AjaxAPI/SendEmail",
+                    data: email,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true
+                        })
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Mail Send Successfully'
+                        })
+                    },
+                    failure: function (response) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true
+                        })
+
+                        Toast.fire({
+                            icon: 'info',
+                            title: 'Mail Failed To Send' 
+                        })
+                    },
+                    error: function (response) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1000,
+                            timerProgressBar: true
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Mail Failed To Send'
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
